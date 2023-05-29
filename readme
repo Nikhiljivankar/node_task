@@ -1,0 +1,18 @@
+-for running project 
+    install packages using command
+    npm i
+-then make chnages in .env file
+    add mongo database connection string
+    and sendgrid api key for sending emails for forgot password
+-to run code
+    use any of the following command
+    -node index.js
+    -nodemon index.js
+    -npm run dev
+    -npm run start
+
+
+NOTE:
+on many places i havent use pagination that can be improved 
+we can make reports over survey responses using aggregations
+some more validation can be applied
