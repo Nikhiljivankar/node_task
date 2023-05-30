@@ -7,9 +7,9 @@ const ErrorResponse = require("../utils/errorResponse");
 
 // keep strings in lowercase
 const allowedRoutes = [
-  "/api/v1/auth/login",
+  "/api/v1/user/login",
   "/api/get_token",
-  "/api/v1/auth/signup",
+  "/api/v1/user/signup",
 ];
 
 const authorize = catchAsync(async (req, res, next) => {

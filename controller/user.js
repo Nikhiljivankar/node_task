@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 const UserModel = require("../model/user");
-
+const jwt = require("jsonwebtoken");
+const path = require("path");
+const handlebars = require("handlebars");
+const fs = require("fs");
 const passwordUtil = require("../utils/password");
 const catchAsync = require("../utils/catchAsync");
 const ErrorResponse = require("../utils/errorResponse");
@@ -14,10 +17,13 @@ const regex = new RegExp(
 );
 
 const sendMessage = async (email, subject, text, html) => {
+  const jwt = require("jsonwebtoken");
+const path = require("path");
+const fs = require("fs");
   try {
       const msg = {
           to: email, // Change to your recipient
-          from: "useyour@gmail.com", // Change to your verified sender
+          from: "harshitkyals@gmail.com", // Change to your verified sender
           subject: subject,
           text: text,
           html: html
@@ -50,7 +56,7 @@ exports.getMe = catchAsync(async (req, res, next) => {
 });
 
 exports.signup = catchAsync(async (req, res, next) => {
-  if (regex.test(req.body.email)) {
+  if (!regex.test(req.body.email)) {
     return next(new ErrorResponse("please enter valid Email", 400));
   }
   const isUserExist = await UserModel.findOne({ email: req.body.email });
@@ -58,7 +64,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   if (isUserExist) {
     return next(new ErrorResponse("Email already registered", 400));
   }
-  if (req.body.age) {
+  if (!req.body.age) {
     return next(new ErrorResponse("Age is required", 400));
   }
 let modelData={
@@ -169,15 +175,9 @@ exports.forgotPassword = async (req, res) => {
           };
           const htmlToSend = template(replacements);
           await sendMessage(obtainUser.email, "Reset link for Password Change", ' ', htmlToSend);
-          let apiResponse = response.generate(
-              constants.SUCCESS,
-              messages.USER.EMAILSENT,
-              constants.HTTP_SUCCESS,
-              null
-          );
-          return res.status(200).send(apiResponse);
+          return res.status(200).json(successResponse(null,0,"Reset link for Password Change"));
       } else {
-          return res.status(404).send({ status: true, msg: "User not found" });
+          return res.status(404).json({ status: true, msg: "User not found" });
       }
   } catch (err) {
       res.status(500).send({ Error: err.message });
