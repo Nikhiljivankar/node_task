@@ -10,6 +10,7 @@ exports.Create = catchAsync(async (req, res, next) => {
     _id: new mongoose.Types.ObjectId(),
     questionName: req.body.questionName,
     questionAgeRange: req.body.questionAgeRange,
+    frequency: req.body.frequency,
     question: req.body.question,
     options: req.body.options,
     createdBy: req.body.createdBy,
@@ -34,13 +35,13 @@ exports.GetByAgeRange = catchAsync(async (req, res, next) => {
   let features;
   const limit = req.body.limit ? parseInt(req.body.limit) : 10;
   const skip = req.body.page ? parseInt(req.body.page) * limit : 0;
-  const payload = {};
-
+  const payload = { questionAgeRange: req.body.questionAgeRange };
+  if (req.body.frequency) {
+    payload["frequency"] = req.body.frequency
+  }
   features = await questionModel.aggregate([
     {
-      $match: {
-        $and: [payload],
-      },
+      $match: payload,
     },
     { $skip: skip },
     { $limit: limit },
@@ -96,7 +97,7 @@ exports.deleteQuestions = catchAsync(async (req, res) => {
 });
 
 exports.filter = catchAsync(async (req, res) => {
-  const topic =await questionModel.find(req.body).lean()
+  const topic = await questionModel.find(req.body).lean()
 
   res.json({
     status: 200,
