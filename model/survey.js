@@ -24,6 +24,11 @@ const testSchema = mongoose.Schema({
         enum:["Monthly","Weekly"],
         required: [true, "frequency is required"],
       },
+    diagnosis: {
+        type: String,
+        enum:["Acne","Psoriasis","All teenagers", "ADHD", "PTSD", "Bipolar", "Fibromyagia", "Eating disorder","All"],
+        required: [true, "diagnosis is required"],
+      },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         required: false,

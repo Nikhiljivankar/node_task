@@ -12,6 +12,7 @@ exports.Create = catchAsync(async (req, res, next) => {
         _id: new mongoose.Types.ObjectId(),
         surveyName: req.body.surveyName,
         frequency: req.body.frequency,
+        diagnosis: req.body.diagnosis,
         noOfQuestion: req.body.noOfQuestion,
         questionList: req.body.questionList,
         createdBy: req.body.userId,
