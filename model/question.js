@@ -15,13 +15,18 @@ const questionSchema = mongoose.Schema({
   },
   questionAgeRange: {
     type: String,
-    enum:["13 above","18 or less","all ages"],
+    enum:["above 13","13 and above", "18 or less","all ages"],
     required: [true, "questionAgeRange is required"],
   },
   frequency: {
     type: String,
     enum:["Monthly","Weekly"],
     required: [true, "frequency is required"],
+  },
+  diagnosis: {
+    type: String,
+    enum:["Acne","Psoriasis","All teenagers", "ADHD", "PTSD", "Bipolar", "Fibromyagia", "Eating disorder","All"],
+    required: [true, "diagnosis is required"],
   },
   question: {
     type: String,

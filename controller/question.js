@@ -11,6 +11,7 @@ exports.Create = catchAsync(async (req, res, next) => {
     questionName: req.body.questionName,
     questionAgeRange: req.body.questionAgeRange,
     frequency: req.body.frequency,
+    diagnosis: req.body.diagnosis,
     question: req.body.question,
     options: req.body.options,
     createdBy: req.body.createdBy,
@@ -38,6 +39,9 @@ exports.GetByAgeRange = catchAsync(async (req, res, next) => {
   const payload = { questionAgeRange: req.body.questionAgeRange };
   if (req.body.frequency) {
     payload["frequency"] = req.body.frequency
+  }
+  if (req.body.diagnosis) {
+    payload["diagnosis"] = req.body.diagnosis
   }
   features = await questionModel.aggregate([
     {
