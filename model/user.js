@@ -31,7 +31,7 @@ const userSchema = mongoose.Schema({
   frequency: {
     type: String,
     enum:["Monthly","Weekly"],
-    // required: [true, "frequency is required"],// we can make it required
+    // required: [true, "frequency is required"],// we can make it required admin can update this for user
   },
   diagnosis_of_mental_conditions: {
     type: String,

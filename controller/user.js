@@ -67,6 +67,9 @@ exports.signup = catchAsync(async (req, res, next) => {
   if (!req.body.age) {
     return next(new ErrorResponse("Age is required", 400));
   }
+  if (req.body.age > 10) {
+    return next(new ErrorResponse("Age below 10 is not allowed", 400));
+  }
 let modelData={
   _id: new mongoose.Types.ObjectId(),
   age: parseInt(req.body.age),
