@@ -73,6 +73,7 @@ let modelData={
   gender: req.body.gender,
   email: req.body.email,
   country: req.body.country,
+  frequency: req.body.frequency,
   race_and_ethnicity: req.body.race_and_ethnicity,
   education: req.body.education,
   diagnosis_of_mental_conditions: req.body.diagnosis_of_mental_conditions,
@@ -140,6 +141,16 @@ delete resData.user.password;
 });
 
 exports.updateMe = catchAsync(async (req, res, next) => {
+  const user = await UserModel.findByIdAndUpdate(req.body._id, req.body, {
+    new: true,
+  });
+
+  if (!user) return next(new ErrorResponse("User not found", 404));
+
+  return res.status(200).json(successResponse(user, 1));
+});
+
+exports.updateFrequency = catchAsync(async (req, res, next) => {
   const user = await UserModel.findByIdAndUpdate(req.body._id, req.body, {
     new: true,
   });

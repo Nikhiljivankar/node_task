@@ -6,6 +6,7 @@ router.post('/signup', userController.signup);
 router.post('/login', userController.login);
 router.get('/getMe', userController.getMe);
 router.post('/updateMe', userController.updateMe);
+router.post('/applyFrequency', userController.updateFrequency);
 router.post('/forgot-password', userController.forgotPassword);
 router.post('/reset-password', userController.resetPassword);
 router.post('/reset-known-password', userController.resetPasswordKnownPass);
