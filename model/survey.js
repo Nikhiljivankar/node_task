@@ -19,6 +19,11 @@ const testSchema = mongoose.Schema({
         ],
         default: [],
     },
+    frequency: {
+        type: String,
+        enum:["Monthly","Weekly"],
+        required: [true, "frequency is required"],
+      },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         required: false,

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const SurveyModel = require("../model/survey");
+const UserModel = require("../model/user");
 const SurveyDataModel = require("../model/surveyData");
 const catchAsync = require("../utils/catchAsync");
 const ErrorResponse = require("../utils/errorResponse");
@@ -10,6 +11,7 @@ exports.Create = catchAsync(async (req, res, next) => {
     const surveyData = await SurveyModel.create({
         _id: new mongoose.Types.ObjectId(),
         surveyName: req.body.surveyName,
+        frequency: req.body.frequency,
         noOfQuestion: req.body.noOfQuestion,
         questionList: req.body.questionList,
         createdBy: req.body.userId,
@@ -18,7 +20,10 @@ exports.Create = catchAsync(async (req, res, next) => {
 });
 
 exports.Get = catchAsync(async (req, res, next) => {
-    const surveyData = await SurveyModel.find(req.query).populate("questionList createdBy").lean();
+    let payload =req.query ?? {};
+    const userData = await UserModel.findOne({_id:req.user._id}).lean();
+    payload["frequency"]=userData?.frequency;
+    const surveyData = await SurveyModel.find(payload).populate("questionList createdBy").lean();
 
     if (surveyData && surveyData.length) {
         res
